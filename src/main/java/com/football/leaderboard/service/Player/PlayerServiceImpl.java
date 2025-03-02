@@ -30,8 +30,9 @@ public class PlayerServiceImpl implements IPlayerService {
     }
 
     @Override
-    public Player updatePlayer(Long id, Player player) {
-        return playerRepository.save(player);
+    public Player updatePlayer(Long id, Player newModel) {
+        newModel.setPlayerId(id);  // Ensure ID is set for update
+        return playerRepository.save(newModel);
     }
 
 
