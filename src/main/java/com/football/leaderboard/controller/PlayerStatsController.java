@@ -1,8 +1,7 @@
 package com.football.leaderboard.controller;
 
 import com.football.leaderboard.entity.PlayerTotalStats;
-import com.football.leaderboard.service.PlayerTotalStats.IPlayerTotalStatsService;
-import com.football.leaderboard.service.PlayerTotalStats.PlayerTotalStatsServiceImpl;
+import com.football.leaderboard.service.PlayerStats.IPlayerStatsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class PlayerTotalStatsController {
 
     @Autowired
-    private IPlayerTotalStatsService playerTotalStatsService;
+    private IPlayerStatsService playerTotalStatsService;
 
     @GetMapping()
     public ResponseEntity<?> getPlayerTotalStatsById(@PathVariable("id") Long id) {
