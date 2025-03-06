@@ -19,7 +19,7 @@ public class ReflectionPatch {
 
         try {
             Class<?> oldClass = Hibernate.getClass(oldData);
-            Class<?>  patchclass = Hibernate.getClass(oldData);
+            Class<?> patchclass = Hibernate.getClass(oldData);
 
             Field[] fields = oldClass.getDeclaredFields();
 
@@ -34,16 +34,17 @@ public class ReflectionPatch {
 
                 Field patchField = patchclass.getDeclaredField(fieldName);
 
+
                 // CANT ACCESS IF THE FIELD IS PRIVATE
                 oldField.setAccessible(true);
                 patchField.setAccessible(true);
 
 
-
                 // CHECK IF THE VALUE OF THE FIELD IS NOT NULL, IF NOT UPDATE EXISTING OBJECT
-                Object pathValue = patchField.get(patchData);
+                Object patchValue = patchField.get(patchData);
 
-                oldField.set(oldData, pathValue);
+                if (patchValue != null)
+                    oldField.set(oldData, patchValue);
 
                 //MAKE THE FIELD PRIVATE AGAIN
                 oldField.setAccessible(false);
