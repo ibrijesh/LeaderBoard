@@ -1,18 +1,22 @@
-package com.football.leaderboard.service.PlayerTotalStats;
+package com.football.leaderboard.service.PlayerStats;
 
-import com.football.leaderboard.entity.PlayerTotalStats;
+import com.football.leaderboard.entity.PlayerStats;
+
+import java.util.List;
 
 
-public interface IPlayerTotalStatsService {
-    PlayerTotalStats findPlayerTotalStatsById(Long id);
+public interface IPlayerStatsService {
+    PlayerStats findPlayerStatsById(Long id);
 
-    PlayerTotalStats savePlayerTotalStats(PlayerTotalStats playerTotalStats);
+    PlayerStats savePlayerStats(Long id, PlayerStats playerStats) throws IllegalAccessException;
 
-    PlayerTotalStats updatePlayerTotalStats(Long id, PlayerTotalStats playerTotalStats);
+    PlayerStats updatePlayerStats(Long id, PlayerStats playerStats) throws IllegalAccessException;
 
-    PlayerTotalStats patchPlayerTotalStats(Long id, PlayerTotalStats playerTotalStats) throws IllegalAccessException;
+    PlayerStats patchPlayerStats(Long id, PlayerStats playerStats) throws IllegalAccessException;
 
-    void deletePlayerTotalStatsBById(Long id);
+    void deletePlayerStatsById(Long playerId, Long statsId) throws IllegalAccessException;
 
-    PlayerTotalStats findPlayerTotalStatsByPlayerId(Long id);
+    List<PlayerStats> findAllPlayerStats();
+
+    List<PlayerStats> findPlayerStatsByPlayerId(Long id);
 }

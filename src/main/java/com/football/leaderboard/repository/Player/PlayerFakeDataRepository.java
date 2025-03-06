@@ -67,7 +67,7 @@ public class PlayerFakeDataRepository implements IPlayerRepository {
 
     @Override
     public List<Player> findByGoals(final Long minScore, final Long maxScore) {
-        return players.stream().filter(player -> player.getOverallStats().getTotalGoalsScored() >= minScore &&
-                player.getOverallStats().getTotalGoalsScored() <= maxScore).collect(Collectors.toList());
+        return players.stream().filter(player -> player.getPlayerOverallStats().getGoalsScored() >= minScore &&
+                player.getPlayerOverallStats().getGoalsScored() <= maxScore).collect(Collectors.toList());
     }
 }

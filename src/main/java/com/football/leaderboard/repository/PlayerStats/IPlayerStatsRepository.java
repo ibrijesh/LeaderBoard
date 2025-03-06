@@ -1,16 +1,19 @@
-package com.football.leaderboard.repository.PlayerTotalStats;
+package com.football.leaderboard.repository.PlayerStats;
 
 
-import com.football.leaderboard.entity.PlayerTotalStats;
+import com.football.leaderboard.entity.PlayerStats;
 
 import java.util.Optional;
+import java.util.List;
 
-public interface IPlayerTotalStatsRepository<P, L extends Number> {
-    Optional<PlayerTotalStats> findById(Long id);
+public interface IPlayerStatsRepository {
+    Optional<PlayerStats> findById(Long id);
 
-    PlayerTotalStats save(PlayerTotalStats playerTotalStats);
+    PlayerStats save(PlayerStats playerStats);
 
     void deleteById(Long id);
 
-    PlayerTotalStats findByPlayerId(Long id);
+    List<PlayerStats> findAll();
+
+    List<PlayerStats> findStatsByPlayerId(Long playerId);
 }

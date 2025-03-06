@@ -6,19 +6,11 @@ spring:
     active: in-memory
 
   datasource:
-    url: jdbc:h2:file:./data/leaderboarddb  # In-memory database
-    driver-class-name: org.h2.Driver
-    username: sa
+    url: jdbc:mysql://localhost:3306/leaderboard
+    username: myuser
     password: Brijesh@123
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
-      ddl-auto: update  # Options: create, update, validate, none
-    show-sql: true  # Enables SQL query logging
-  h2:
-    console:
-      enabled: true  # Enables H2 web console
-      path: /h2-console  # Access URL: http://localhost:8080/h2-console
-      settings:
-        trace: false
-        web-allow-others: false  # Set to true if you need remote access
+      ddl-auto: update

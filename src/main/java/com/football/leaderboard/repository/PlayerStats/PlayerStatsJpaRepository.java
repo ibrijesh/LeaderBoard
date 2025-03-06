@@ -1,37 +1,45 @@
-package com.football.leaderboard.repository.PlayerTotalStats;
+package com.football.leaderboard.repository.PlayerStats;
 
-import com.football.leaderboard.entity.PlayerTotalStats;
+import com.football.leaderboard.entity.PlayerStats;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
+
 
 @Repository
 @Profile("in-memory")
-public class PlayerTotalStatsJpaRepository implements IPlayerTotalStatsRepository {
+public class PlayerStatsJpaRepository implements IPlayerStatsRepository {
 
     @Autowired
-    private IPlayerTotalStatsJpaRepository playerTotalStatsJpaRepository;
+    private IPlayerStatsJpaRepository playerStatsJpaRepository;
 
 
     @Override
-    public Optional<PlayerTotalStats> findById(final Long id) {
-        return playerTotalStatsJpaRepository.findById(id);
+    public Optional<PlayerStats> findById(final Long id) {
+        return playerStatsJpaRepository.findById(id);
     }
 
     @Override
-    public PlayerTotalStats save(final PlayerTotalStats playerTotalStats) {
-        return playerTotalStatsJpaRepository.save(playerTotalStats);
+    public PlayerStats save(final PlayerStats playerStats) {
+        return playerStatsJpaRepository.save(playerStats);
     }
 
     @Override
     public void deleteById(final Long id) {
-        playerTotalStatsJpaRepository.deleteById(id);
+        playerStatsJpaRepository.deleteById(id);
     }
 
     @Override
-    public PlayerTotalStats findByPlayerId(final Long id) {
-        return playerTotalStatsJpaRepository.findByPlayerId(id);
+    public List<PlayerStats> findAll() {
+        return playerStatsJpaRepository.findAll();
     }
+
+    @Override
+    public List<PlayerStats> findStatsByPlayerId(final Long playerId) {
+        return playerStatsJpaRepository.findStatsByPlayerId(playerId);
+    }
+
 }

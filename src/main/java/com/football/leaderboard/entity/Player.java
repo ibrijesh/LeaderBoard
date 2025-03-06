@@ -1,5 +1,6 @@
 package com.football.leaderboard.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.football.leaderboard.contant.Gender;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -10,6 +11,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -32,7 +34,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
+@ToString(exclude = {"playerStats", "playerOverallStats"})
 public class Player {
 
     @Id
@@ -58,9 +60,12 @@ public class Player {
 
     // One-to-Many relationship with PlayerStats
     @OneToMany(mappedBy = "player", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonIgnore
     private List<PlayerStats> playerStats = new ArrayList<>();
 
-    @OneToOne(mappedBy = "player", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    private PlayerTotalStats overallStats;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @JoinColumn(name = "overall_stats_id")   // This is foreign key
+    @JsonIgnore
+    private PlayerOverallStats playerOverallStats;
 
 }

@@ -1,7 +1,9 @@
 package com.football.leaderboard.service.Player;
 
 import com.football.leaderboard.entity.Player;
+import com.football.leaderboard.entity.PlayerOverallStats;
 import com.football.leaderboard.repository.Player.IPlayerRepository;
+import com.football.leaderboard.service.PlayerOverallStats.IPlayerOverallStatsService;
 import com.football.leaderboard.utils.ReflectionPatch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,10 +19,9 @@ public class PlayerServiceImpl implements IPlayerService {
     @Autowired
     private IPlayerRepository playerRepository;
 
-
     @Override
-    public Player savePlayer(final Player player) {
-        return playerRepository.save(player);
+    public Player savePlayer(final Player model) {
+        return playerRepository.save(model);
     }
 
     @Override

@@ -1,13 +1,15 @@
-package com.football.leaderboard.repository.PlayerTotalStats;
+package com.football.leaderboard.repository.PlayerStats;
 
-import com.football.leaderboard.entity.PlayerTotalStats;
+import com.football.leaderboard.entity.PlayerStats;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface IPlayerTotalStatsJpaRepository extends JpaRepository<PlayerTotalStats, Long> {
+import java.util.List;
 
-    @Query("Select p FROM PlayerTotalStats p where p.player.playerId = :id")
-    PlayerTotalStats findByPlayerId(@Param("id") Long id);
+public interface IPlayerStatsJpaRepository extends JpaRepository<PlayerStats, Long> {
+
+    @Query("Select p FROM PlayerStats p where p.player.playerId = :id")
+    List<PlayerStats> findStatsByPlayerId(@Param("id") Long id);
 
 }

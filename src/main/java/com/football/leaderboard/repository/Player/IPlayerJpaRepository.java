@@ -11,6 +11,6 @@ public interface IPlayerJpaRepository extends JpaRepository<Player, Long> {
     @Query("SELECT p FROM Player  p WHERE p.playerName = :name")
     List<Player> searchPlayerByName(@Param("name") final String name);
 
-    @Query("SELECT p FROM Player p WHERE p.overallStats.totalGoalsScored > :minScore AND p.overallStats.totalGoalsScored < :maxScore")
+    @Query("SELECT p FROM Player p WHERE p.playerOverallStats.goalsScored > :minScore AND p.playerOverallStats.goalsScored < :maxScore")
     List<Player> filterPlayerByGoals(@Param("minScore") final Long minScore, @Param("maxScore") final Long maxScore);
 }

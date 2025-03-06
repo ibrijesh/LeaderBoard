@@ -2,11 +2,15 @@ package com.football.leaderboard.repository.PlayerOverallStats;
 
 import com.football.leaderboard.entity.PlayerOverallStats;
 
-public interface IPlayerOverallStats {
+import java.util.Optional;
 
-    PlayerOverallStats findById(PlayerOverallStats playerOverallStats);
+public interface IPlayerOverallStatsRepository {
+
+    Optional<PlayerOverallStats> findById(Long id);
 
     PlayerOverallStats save(PlayerOverallStats playerOverallStats);
 
-    void deleteByID(Long id);
+    PlayerOverallStats findByPlayerId(Long id);
+
+    void deleteById(Long id);
 }

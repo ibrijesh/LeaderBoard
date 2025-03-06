@@ -1,6 +1,6 @@
 package com.football.leaderboard.controller;
 
-import com.football.leaderboard.entity.PlayerTotalStats;
+import com.football.leaderboard.entity.PlayerStats;
 import com.football.leaderboard.service.PlayerStats.IPlayerStatsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,32 +15,44 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("api/v2/players_total_stats")
-public class PlayerTotalStatsController {
+@RequestMapping("api/v2/players_stats")
+public class PlayerStatsController {
 
     @Autowired
-    private IPlayerStatsService playerTotalStatsService;
+    private IPlayerStatsService playerStatsService;
+
 
     @GetMapping()
-    public ResponseEntity<?> getPlayerTotalStatsById(@PathVariable("id") Long id) {
+    public ResponseEntity<?> getAllPlayerStats() {
         try {
-            PlayerTotalStats playerTotalStats = playerTotalStatsService.findPlayerTotalStatsById(id);
+            return ResponseEntity.ok(playerStatsService.findAllPlayerStats());
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+        }
+    }
 
-            if (playerTotalStats == null)
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getPlayerStatsById(@PathVariable("id") Long id) {
+        try {
+            PlayerStats playerStats = playerStatsService.findPlayerStatsById(id);
+
+            if (playerStats == null)
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("PLayer Total Stats does not exist");
 
-            return ResponseEntity.ok(playerTotalStats);
+            return ResponseEntity.ok(playerStats);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
         }
     }
 
     @GetMapping("/player/{id}")
-    public ResponseEntity<?> getPlayerTotalStatsByPlayerId(@PathVariable("id") Long id) {
+    public ResponseEntity<?> getPlayerStatsByPlayerId(@PathVariable("id") Long playerId) {
         try {
-            PlayerTotalStats playerTotalStats = playerTotalStatsService.findPlayerTotalStatsByPlayerId(id);
-            return ResponseEntity.ok(playerTotalStats);
+            List<PlayerStats> playerStats = playerStatsService.findPlayerStatsByPlayerId(playerId);
+            return ResponseEntity.ok(playerStats);
 
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
@@ -48,40 +60,49 @@ public class PlayerTotalStatsController {
 
     }
 
-    @PostMapping()
-    public ResponseEntity<?> addPlayerTotalStats(@RequestBody PlayerTotalStats model) {
+    @PostMapping("/{id}")
+    public ResponseEntity<?> addPlayerStats(@PathVariable("id") Long playerId, @RequestBody PlayerStats model) {
+
+        System.out.println(playerId);
+        System.out.println(model);
+
         try {
-            PlayerTotalStats playerTotalStats = playerTotalStatsService.savePlayerTotalStats(model);
-            return ResponseEntity.ok(playerTotalStats);
+            PlayerStats playerStats = playerStatsService.savePlayerStats(playerId, model);
+            System.out.println(playerStats);
+            return ResponseEntity.ok(playerStats);
         } catch (Exception ex) {
+            System.out.println(ex.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
         }
     }
 
-    @PutMapping
-    public ResponseEntity<?> updatePlayerTotalStats(@PathVariable("id") Long id, @RequestBody PlayerTotalStats model) {
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updatePlayerStats(@PathVariable("id") Long playerId, @RequestBody PlayerStats model) {
         try {
-            PlayerTotalStats playerTotalStats = playerTotalStatsService.updatePlayerTotalStats(id, model);
-            return ResponseEntity.ok(playerTotalStats);
+            PlayerStats playerStats = playerStatsService.updatePlayerStats(playerId, model);
+            return ResponseEntity.ok(playerStats);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
         }
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<?> patchPlayerTotalStats(@PathVariable("id") Long id, @RequestBody PlayerTotalStats model) {
+    public ResponseEntity<?> patchPlayerStats(@PathVariable("id") Long playerId, @RequestBody PlayerStats model) {
         try {
-            PlayerTotalStats newModel = playerTotalStatsService.patchPlayerTotalStats(id, model);
+            PlayerStats newModel = playerStatsService.patchPlayerStats(playerId, model);
             return ResponseEntity.ok(newModel);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> removePlayerTotalStats(@PathVariable("id") Long id) {
+    @DeleteMapping("/{statsId}/player/{playerId}")
+    public ResponseEntity<?> removePlayerStats(@PathVariable("playerId") Long playerId, @PathVariable("statsId") Long statsId) {
+
+        System.out.println(playerId + " " + statsId);
+
         try {
-            playerTotalStatsService.deletePlayerTotalStatsBById(id);
+            playerStatsService.deletePlayerStatsById(playerId, statsId);
             return ResponseEntity.ok("Deleted Successfully");
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
